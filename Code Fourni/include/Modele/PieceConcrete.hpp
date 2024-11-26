@@ -1,7 +1,7 @@
 #ifndef PIECECONCRETE_
 #define PIECECONCRETE_
-#include "Piece.hpp"
 
+#include "Piece.hpp"
 
 
 class PieceConcrete : public Piece {

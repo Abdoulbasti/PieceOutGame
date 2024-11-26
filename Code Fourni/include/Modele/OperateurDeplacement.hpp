@@ -1,5 +1,6 @@
 #ifndef OPERATEURDEPLACEMENT_
 #define OPERATEURDEPLACEMENT_
+
 #include "PieceOperateur.hpp"
 #include "OrientationDeplacement.hpp"
 

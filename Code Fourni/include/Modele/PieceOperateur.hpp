@@ -1,7 +1,10 @@
-#ifndef PIECEOPERTAEUR_
+#ifndef PIECEOPERATEUR_
 #define PIECEOPERATEUR_
-#include "PieceConcrete.hpp"
-#include "OperateurDeplacement.hpp"
+
+#include "Piece.hpp"
+
+class PieceConcrete;
+class OperateurDeplacement;
 
 class PieceOperateur : public Piece {
 	public:

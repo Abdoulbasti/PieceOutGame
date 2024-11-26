@@ -1,11 +1,13 @@
 #ifndef PIECE_
 #define PIECE_
-#include "PieceOperateur.hpp"
+
 #include <utility> // pour pair
 #include <vector>
+
 #include <iostream> 
 using namespace std;
 
+class PieceOperateur;
 class Piece{
     public :
 	virtual void trigger(const pair<int,int> & coord , Piece &origin)=0;

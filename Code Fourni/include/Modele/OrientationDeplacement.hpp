@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-enum class OrientationDeplacement{
+enum class OrientationDeplacement{ 
     NORD, SUD, EST, OUEST
 };
 #endif

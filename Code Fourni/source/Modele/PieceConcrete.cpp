@@ -1,9 +1,10 @@
-#include "include/Modele/PieceConcrete.hpp"
+#include "../../include/Modele/PieceConcrete.hpp"
+#include "../../include/Modele/PieceOperateur.hpp"
 
 
 PieceConcrete::PieceConcrete(const vector<pair<int, int>>& coords): coordinates(coords) {}
 
-const PieceConcrete::vector<pair<int, int>>& getCoordinates() const { return coordinates; }
+const vector<pair<int, int>>& PieceConcrete::getCoordinates() const { return coordinates; }
 
 void PieceConcrete::trigger(const pair<int,int> & coord, Piece &origin) {}
 
