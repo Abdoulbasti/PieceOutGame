@@ -10,8 +10,13 @@ void OperateurDeplacement::visit(OperateurDeplacement &x) const {
     x.source.accept(*this); 
 }
 
-//virtual void visit(OperateurRotation &x) const;
-//virtual void visit(OperateurSymetrie &x) const;
+void OperateurDeplacement::visit(OperateurRotation &x) const{
+
+}
+
+void OperateurDeplacement::visit(OperateurSymetrie &x) const{
+    
+}
 
 void OperateurDeplacement::mapPosition( pair<int, int> & pos) const {
     switch (sens) {
