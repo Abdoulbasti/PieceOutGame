@@ -1,30 +1,45 @@
-CPP=g++ --std=c++11 -Wall
+CPP=g++ --std=c++11 -Wall -Iinclude
+SOURCE_MODELE_DIR=source/Modele
+INCLUDE_MODELE_DIR=include/Modele
+BD_DIR=build
 
-all : test
+# La Liste des fichiers objets pour le modele
+#Ajouter ici d'autres objet .o 
+OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o
 
-test : build/test.o  build/Piece.o  build/PieceConcrete.o  build/PieceOperateur.o  build/OperateurDeplacement.o build/OperateurRotation.o build/OperateurSymetrie.o
-	$(CPP) -o test  build/test.o  build/Piece.o  build/PieceConcrete.o  build/PieceOperateur.o  build/OperateurDeplacement.o build/OperateurRotation.o build/OperateurSymetrie.o
+OBJ_VUE_LIST = 
 
-build/Piece.o : source/Modele/Piece.cpp  include/Modele/Piece.hpp 
-	$(CPP) -c source/Modele/Piece.cpp -o build/Piece.o
 
-build/test.o : source/Modele/test.cpp  include/Modele/PieceConcrete.hpp include/Modele/OperateurDeplacement.hpp 
-	$(CPP) -c source/Modele/test.cpp -o build/test.o
+all_modele : $(BD_DIR)/ProgramModele
 
-build/PieceOperateur.o : source/Modele/PieceOperateur.cpp  include/Modele/PieceOperateur.hpp include/Modele/PieceConcrete.hpp
-	$(CPP) -c  source/Modele/PieceOperateur.cpp -o build/PieceOperateur.o
+#Compilation et excution
+$(BD_DIR)/ProgramModele : $(OBJ_MODELE_LIST)
+	$(CPP) -o $(BD_DIR)/ProgramModele  $(OBJ_MODELE_LIST)
+	./$(BD_DIR)/ProgramModele
+	
+$(BD_DIR)/Modele.o : $(SOURCE_MODELE_DIR)/Modele.cpp
+	$(CPP) -c $(SOURCE_MODELE_DIR)/Modele.cpp -o $(BD_DIR)/Modele.o
 
-build/PieceConcrete.o : source/Modele/PieceConcrete.cpp  include/Modele/PieceConcrete.hpp include/Modele/PieceOperateur.hpp
-	$(CPP) -c  source/Modele/PieceConcrete.cpp -o build/PieceConcrete.o
+$(BD_DIR)/Piece.o : $(SOURCE_MODELE_DIR)/Piece.cpp
+	$(CPP) -c $(SOURCE_MODELE_DIR)/Piece.cpp -o $(BD_DIR)/Piece.o
 
-build/OperateurDeplacement.o : source/Modele/OperateurDeplacement.cpp  include/Modele/OperateurDeplacement.hpp 
-	$(CPP) -c  source/Modele/OperateurDeplacement.cpp -o build/OperateurDeplacement.o
+$(BD_DIR)/PieceOperateur.o : $(SOURCE_MODELE_DIR)/PieceOperateur.cpp
+	$(CPP) -c  $(SOURCE_MODELE_DIR)/PieceOperateur.cpp -o $(BD_DIR)/PieceOperateur.o
 
-build/OperateurSymetrie.o : source/Modele/OperateurSymetrie.cpp  include/Modele/OperateurSymetrie.hpp 
-	$(CPP) -c  source/Modele/OperateurSymetrie.cpp -o build/OperateurSymetrie.o
+$(BD_DIR)/PieceConcrete.o : $(SOURCE_MODELE_DIR)/PieceConcrete.cpp
+	$(CPP) -c  $(SOURCE_MODELE_DIR)/PieceConcrete.cpp -o $(BD_DIR)/PieceConcrete.o
 
-build/OperateurRotation.o : source/Modele/OperateurRotation.cpp  include/Modele/OperateurRotation.hpp 
-	$(CPP) -c  source/Modele/OperateurRotation.cpp -o build/OperateurRotation.o
+$(BD_DIR)/OperateurDeplacement.o : $(SOURCE_MODELE_DIR)/OperateurDeplacement.cpp
+	$(CPP) -c  $(SOURCE_MODELE_DIR)/OperateurDeplacement.cpp -o $(BD_DIR)/OperateurDeplacement.o
 
-clean :
-	rm -f build/*.o test 
+$(BD_DIR)/OperateurSymetrie.o : $(SOURCE_MODELE_DIR)/OperateurSymetrie.cpp
+	$(CPP) -c  $(SOURCE_MODELE_DIR)/OperateurSymetrie.cpp -o $(BD_DIR)/OperateurSymetrie.o
+
+$(BD_DIR)/OperateurRotation.o : $(SOURCE_MODELE_DIR)/OperateurRotation.cpp 
+	$(CPP) -c  $(SOURCE_MODELE_DIR)/OperateurRotation.cpp -o $(BD_DIR)/OperateurRotation.o
+
+#Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_MODELE_LIST
+
+clean_modele :
+	rm -f $(BD_DIR)/*.o $(BD_DIR)/ProgramModele

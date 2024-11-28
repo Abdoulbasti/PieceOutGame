@@ -1,4 +1,4 @@
-#include "../../include/Modele/OperateurRotation.hpp"
+#include "Modele/OperateurRotation.hpp"
 
 OperateurRotation::OperateurRotation(Piece & source, const pair<int,int> & position, OrientationRotation sens) : PieceOperateur(source,position) , sens{sens} {};
 

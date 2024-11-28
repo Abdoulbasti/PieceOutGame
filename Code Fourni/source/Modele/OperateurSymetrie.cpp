@@ -1,4 +1,4 @@
-#include "../../include/Modele/OperateurSymetrie.hpp"
+#include "Modele/OperateurSymetrie.hpp"
 
 OperateurSymetrie::OperateurSymetrie(Piece & source, const pair<int,int> & position, OrientationSymetrie sens) : PieceOperateur(source,position) , sens{sens} {};
 

@@ -1,5 +1,5 @@
-#include "../../include/Modele/PieceConcrete.hpp"
-#include "../../include/Modele/PieceOperateur.hpp"
+#include "Modele/PieceConcrete.hpp"
+#include "Modele/PieceOperateur.hpp"
 
 
 PieceConcrete::PieceConcrete(const vector<pair<int, int>>& coords): coordinates(coords) {}

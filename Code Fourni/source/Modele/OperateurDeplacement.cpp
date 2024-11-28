@@ -1,4 +1,4 @@
-#include "../../include/Modele/OperateurDeplacement.hpp"
+#include "Modele/OperateurDeplacement.hpp"
 
 OperateurDeplacement::OperateurDeplacement(Piece & source, const pair<int,int> & position, OrientationDeplacement sens) : PieceOperateur(source,position) , sens{sens} {};
 

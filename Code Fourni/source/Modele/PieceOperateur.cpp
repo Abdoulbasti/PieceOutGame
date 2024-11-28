@@ -1,5 +1,5 @@
-#include "../../include/Modele/PieceOperateur.hpp"
-#include "../../include/Modele/PieceConcrete.hpp"
+#include "Modele/PieceOperateur.hpp"
+#include "Modele/PieceConcrete.hpp"
 
 PieceOperateur::PieceOperateur(Piece & source, const pair<int,int> & position) 
     : source{source},position{position} {}
