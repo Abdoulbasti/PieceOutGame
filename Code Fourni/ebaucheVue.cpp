@@ -43,7 +43,7 @@ int main() {
         	return EXIT_FAILURE;
     	}
 	// Opérations graphiques générales
-	RenderWindow window{ VideoMode{nbPix_x,nbPix_y},"Piece Out" };
+	RenderWindow window{ VideoMode{nbPix_x,nbPix_y},"Piece Out",Style::Fullscreen };
     	while (window.isOpen()) {
     		int trig_x=-1, trig_y=-1;
                 Vector2i mousePos = Mouse::getPosition(window);
@@ -56,7 +56,7 @@ int main() {
         		trig_y=(mouseWorldPos.y - topLeft.y)/ TILE_SIZE;
 			message += " case :" + to_string(trig_x) + " ; " + to_string(trig_y);
         	}
-                window.setTitle(message);
+                /*window.setTitle(message);*/
         	
         	Event event;
          	while (window.pollEvent(event)) {
