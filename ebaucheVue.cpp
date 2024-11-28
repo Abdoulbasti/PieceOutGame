@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 using namespace sf;
-// ce code a juste été écrit pour une étude de faisabilité. Il vous faudra structurer les choses à votre façon.
+//ce code a juste été écrit pour une étude de faisabilité. Il vous faudra structurer les choses à votre façon.
 
 int main() {
 	// Parametres graphiques, à replacer au bon endroit
@@ -38,7 +38,7 @@ int main() {
         scene_generale.push_back(&trame);
         // on place ici la définition d'une texture rouge, probablement qu'il y a mieux à faire (flightweight ? map ?)
    	Texture texture_rouge;
-    	if (!texture_rouge.loadFromFile("texture.jpg")) {
+    	if (!texture_rouge.loadFromFile("ressources/texture.jpg")) {
     		cerr << "Erreur lors du chargement de l'image" << endl;
         	return EXIT_FAILURE;
     	}
