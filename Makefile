@@ -9,7 +9,7 @@ BD_DIR=build
 OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
 					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o
 
-# La Liste des fichiers objets pour le modele
+# La Liste des fichiers objets pour la vue
 #Ajouter ici d'autres objet .o 
 OBJ_VUE_LIST = $(BD_DIR)/ebaucheVue.o 
 
