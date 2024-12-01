@@ -1,5 +1,8 @@
 #include "Modele/OperateurDeplacement.hpp"
 
+
+/*##################Classe DECORATEUR CONCRETE qui effectue les décorations suivantes : NORD, SUD, EST, OUEST (haut, bas, droit, gauche)####################*/
+
 OperateurDeplacement::OperateurDeplacement(Piece & source, const pair<int,int> & position, OrientationDeplacement sens) : PieceOperateur(source,position) , sens{sens} {};
 
 void OperateurDeplacement::accept(const PieceOperateur &v) { v.visit(*this); }

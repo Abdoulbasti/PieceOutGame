@@ -1,5 +1,8 @@
 #include "Modele/OperateurRotation.hpp"
 
+
+/*##############################"Classe DECORATEUR CONCRETE qui effectue les décorations suivantes : HORAIRE, ANTIHORAIRE###########################*/
+
 OperateurRotation::OperateurRotation(Piece & source, const pair<int,int> & position, OrientationRotation sens) : PieceOperateur(source,position) , sens{sens} {};
 
 void OperateurRotation::accept(const PieceOperateur &v) { v.visit(*this); }

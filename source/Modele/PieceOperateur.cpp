@@ -1,7 +1,10 @@
 #include "Modele/PieceOperateur.hpp"
 #include "Modele/PieceConcrete.hpp"
 
-PieceOperateur::PieceOperateur(Piece & source, const pair<int,int> & position) 
+
+/*################################################Classe DECORATEUR ABSTRAIT################################################*/
+
+PieceOperateur::PieceOperateur(Piece & source, const pair<int,int> & position)
     : source{source},position{position} {}
 
 const vector<pair<int, int>>& PieceOperateur::getCoordinates() const {return source.getCoordinates();}
