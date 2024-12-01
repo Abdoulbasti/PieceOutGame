@@ -22,7 +22,7 @@ void PieceOperateur::trigger(const pair<int,int> & relativePos, Piece &origin) {
 //virtual void PieceOperateur::mapPosition(pair<int, int> &) const =0; 
 
 void PieceOperateur::visit(PieceConcrete &p) const { 
-    for (const pair<int,int> &x : p.getCoordinates()) mapPosition(x);
+    for (pair<int,int> &x : p.getCoordinates()) mapPosition(x);
 }
 
 //virtual void PieceOperateur::visit(OperateurDeplacement &) const =0;
