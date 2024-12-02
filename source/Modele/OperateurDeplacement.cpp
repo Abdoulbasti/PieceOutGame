@@ -5,21 +5,24 @@
 
 OperateurDeplacement::OperateurDeplacement(Piece & source, const pair<int,int> & position, OrientationDeplacement sens) : PieceOperateur(source,position) , sens{sens} {};
 
+//Declancheur décoration : NORD, SUD, EST, OUEST
+void OperateurDeplacement::trigger(const pair<int,int> & coord, Piece &origin){
+    source.trigger(coord, origin);
+    cout << "Piece décoré avec : NORD, SUD, EST, OUEST"<< endl;
+}
+
+
 void OperateurDeplacement::accept(const PieceOperateur &v) { v.visit(*this); }
 
 void OperateurDeplacement::visit(OperateurDeplacement &x) const {
     // le deplacement ne modifie pas le sens
     mapPosition(x.position);
-    x.source.accept(*this); 
+    x.source.accept(*this);
 }
 
-void OperateurDeplacement::visit(OperateurRotation &x) const{
+void OperateurDeplacement::visit(OperateurRotation &x) const {}
 
-}
-
-void OperateurDeplacement::visit(OperateurSymetrie &x) const{
-    
-}
+void OperateurDeplacement::visit(OperateurSymetrie &x) const {}
 
 void OperateurDeplacement::mapPosition( pair<int, int> & pos) const {
     switch (sens) {
