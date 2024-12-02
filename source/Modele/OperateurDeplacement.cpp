@@ -2,6 +2,8 @@
 
 OperateurDeplacement::OperateurDeplacement(Piece & source, const pair<int,int> & position, OrientationDeplacement sens) : PieceOperateur(source,position) , sens{sens} {};
 
+OrientationDeplacement& OperateurDeplacement::getSens() { return sens;}
+
 void OperateurDeplacement::accept(const PieceOperateur &v) { v.visit(*this); }
 
 void OperateurDeplacement::visit(OperateurDeplacement &x) const {
@@ -18,7 +20,7 @@ void OperateurDeplacement::visit(OperateurSymetrie &x) const{
     
 }
 
-void OperateurDeplacement::mapPosition( pair<int, int> & pos) const {
+void OperateurDeplacement::mapPosition(pair<int, int> & pos) const {
     switch (sens) {
         case OrientationDeplacement::NORD : pos.second--; break;
         case OrientationDeplacement::SUD : pos.second++; break;

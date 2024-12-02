@@ -6,9 +6,11 @@
 
 class OperateurDeplacement : public PieceOperateur
 {
-	public:
+	private:
 	OrientationDeplacement sens;
+	public:
 	OperateurDeplacement(Piece & source, const pair<int,int> & position, OrientationDeplacement sens);
+	OrientationDeplacement& getSens() ;
 	virtual void accept(const PieceOperateur &v);
 	virtual void visit(OperateurDeplacement &x) const ;
 	virtual void visit(OperateurRotation &x) const;

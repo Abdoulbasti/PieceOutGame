@@ -2,6 +2,8 @@
 
 OperateurSymetrie::OperateurSymetrie(Piece & source, const pair<int,int> & position, OrientationSymetrie sens) : PieceOperateur(source,position) , sens{sens} {};
 
+OrientationSymetrie& OperateurSymetrie::getSens() { return sens;}
+
 void OperateurSymetrie::accept(const PieceOperateur &v) { v.visit(*this); }
 
 void OperateurSymetrie::visit(OperateurSymetrie &x) const {}

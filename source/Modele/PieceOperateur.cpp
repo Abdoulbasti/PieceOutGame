@@ -4,15 +4,9 @@
 PieceOperateur::PieceOperateur(Piece & source, const pair<int,int> & position) 
     : source{source},position{position} {}
 
-const vector<pair<int, int>>& PieceOperateur::getCoordinates() const {return source.getCoordinates();}
+vector<pair<int, int>>& PieceOperateur::getCoordinates() {return source.getCoordinates();}
 
 pair<int, int> PieceOperateur::getPosition() const { return position;}
-
-void PieceOperateur::setPosition(pair<int, int> newpos) 
-{
-    position.first = newpos.first;
-    position.second = newpos.second;
-}
 
 void PieceOperateur::trigger(const pair<int,int> & relativePos, Piece &origin) {
     if (relativePos==position) origin.accept(*this);
@@ -22,7 +16,7 @@ void PieceOperateur::trigger(const pair<int,int> & relativePos, Piece &origin) {
 //virtual void PieceOperateur::mapPosition(pair<int, int> &) const =0; 
 
 void PieceOperateur::visit(PieceConcrete &p) const { 
-    for (pair<int,int> &x : p.getCoordinates()) mapPosition(x);
+    for (pair<int,int> &x : p.getCoordinates())  mapPosition(x);
 }
 
 //virtual void PieceOperateur::visit(OperateurDeplacement &) const =0;

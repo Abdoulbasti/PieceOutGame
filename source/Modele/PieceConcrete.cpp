@@ -4,7 +4,7 @@
 
 PieceConcrete::PieceConcrete(const vector<pair<int, int>>& coords): coordinates(coords) {}
 
-const vector<pair<int, int>>& PieceConcrete::getCoordinates() const { return coordinates; }
+vector<pair<int, int>>& PieceConcrete::getCoordinates() { return coordinates; }
 
 void PieceConcrete::trigger(const pair<int,int> & coord, Piece &origin) {}
 

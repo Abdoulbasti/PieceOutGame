@@ -9,17 +9,16 @@ class OperateurSymetrie;
 class OperateurRotation;
 
 class PieceOperateur : public Piece {
-	private:
+	protected:
 	pair<int, int> position;
 	public:
 	Piece & source;
 	PieceOperateur(Piece & source, const pair<int,int> & position);
-	const vector<pair<int, int>>& getCoordinates() const;
+	vector<pair<int, int>>& getCoordinates();
 	pair<int, int> getPosition() const;
-	void setPosition(pair<int, int> newpos);
 	void trigger(const pair<int,int> & relativePos, Piece &origin);
 	
-	virtual void mapPosition(const pair<int, int> &) const =0; 
+	virtual void mapPosition(pair<int, int> &) const =0; 
 	virtual void visit(PieceConcrete &p) const ;
 	virtual void visit(OperateurDeplacement &) const =0;
 	virtual void visit(OperateurRotation &) const =0;

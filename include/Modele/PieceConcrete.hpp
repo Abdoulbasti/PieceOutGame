@@ -9,7 +9,7 @@ class PieceConcrete : public Piece {
 	vector<pair<int, int>> coordinates;
 	public :
 	PieceConcrete(const vector<pair<int, int>>& coords);
-	const vector<pair<int, int>>& getCoordinates() const;
+	vector<pair<int, int>>& getCoordinates();
 	void trigger(const pair<int,int> & coord, Piece &origin);
 	void accept(const PieceOperateur & v);
 };

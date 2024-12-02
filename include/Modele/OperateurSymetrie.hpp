@@ -6,9 +6,11 @@
 
 class OperateurSymetrie : public PieceOperateur
 {
-	public:
+	private:
 	OrientationSymetrie sens;
+	public:
 	OperateurSymetrie(Piece & source, const pair<int,int> & position, OrientationSymetrie sens);
+	OrientationSymetrie& getSens();
     virtual void accept(const PieceOperateur &v);
 	//virtual void visit(OperateurDeplacement &x) const ;
 	//virtual void visit(OperateurRotation &x) const;
