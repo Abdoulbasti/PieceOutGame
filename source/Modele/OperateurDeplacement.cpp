@@ -28,7 +28,7 @@ void OperateurDeplacement::mapPosition( pair<int, int> & pos) const {
     switch (sens) {
         case OrientationDeplacement::NORD : pos.second--; break;
         case OrientationDeplacement::SUD : pos.second++; break;
-        case OrientationDeplacement::EST : pos.first++; break;
+        case OrientationDeplacement::EST : pos.first++; break; 
         case OrientationDeplacement::OUEST : pos.first--; break;
     }
 }

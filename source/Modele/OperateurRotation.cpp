@@ -20,4 +20,20 @@ void OperateurRotation::visit(OperateurSymetrie &x) const{}
 
 void OperateurRotation::visit(OperateurDeplacement &x) const{}
 
-void OperateurRotation::mapPosition( pair<int, int> & pos) const {}
+void OperateurRotation::mapPosition( pair<int, int> & pos) const {
+    int temp;
+    switch(sens) {
+        
+        case OrientationRotation::ANTIHORAIRE : 
+        {
+
+        }
+        break;
+
+        case OrientationRotation::HORAIRE :
+        {
+
+        }
+        break;
+    }
+}

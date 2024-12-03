@@ -10,7 +10,10 @@ class OperateurRotation;
 
 class PieceOperateur : public Piece {
 	public:
-	Piece & source;
+	Piece & source; // La pièce source sur laquelle l'opérateur agit.
+	
+	/*La position relative pour déclencher l'action : La position surlequel l'operateur agit par rapport à la piece
+	Le point d'entrée sur la pièce*/
 	pair<int, int> position;
 	PieceOperateur(Piece & source, const pair<int,int> & position);
 	const vector<pair<int, int>>& getCoordinates() const;

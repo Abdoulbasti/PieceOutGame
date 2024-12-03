@@ -21,4 +21,19 @@ void OperateurSymetrie::visit(OperateurRotation &x) const{}
 
 void OperateurSymetrie::visit(OperateurDeplacement &x) const{}
 
-void OperateurSymetrie::mapPosition( pair<int, int> & pos) const {}
+void OperateurSymetrie::mapPosition( pair<int, int> & pos) const {
+
+    switch (sens) {
+        case OrientationSymetrie::HORIZONTALE :
+            {
+                
+            }
+            break;
+
+        case OrientationSymetrie::VERTICALE :
+            {
+
+            }
+            break;
+    }
+}

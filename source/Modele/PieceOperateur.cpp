@@ -11,10 +11,11 @@ const vector<pair<int, int>>& PieceOperateur::getCoordinates() const {return sou
 
 //Declanchement des operations à effectuer sur une PieceOperateur
 void PieceOperateur::trigger(const pair<int,int> & relativePos, Piece &origin) {
-    //if (relativePos==position) origin.accept(*this);
-    //else source.trigger(relativePos, origin);
-    source.trigger(relativePos, origin); //Ajouter l'état de decration par defaut
-    cout << "Etat de la piece après l'état par defaut" << endl;
+    if (relativePos==position) origin.accept(*this);
+    else {
+        source.trigger(relativePos, origin);
+        cout << "Etat de la piece après l'état par defaut" << endl;
+    }
 }
 
 void PieceOperateur::visit(PieceConcrete &p) const { 
