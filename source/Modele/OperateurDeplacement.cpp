@@ -8,7 +8,7 @@ void OperateurDeplacement::accept(const PieceOperateur &v) { v.visit(*this); }
 
 void OperateurDeplacement::visit(OperateurDeplacement &x) const {
     // le deplacement ne modifie pas le sens
-    mapPosition(x.position);
+   mapPosition(x.position);
     x.source.accept(*this); 
 }
 
