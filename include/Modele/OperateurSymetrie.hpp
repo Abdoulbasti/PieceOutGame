@@ -12,8 +12,8 @@ class OperateurSymetrie : public PieceOperateur
 	OperateurSymetrie(Piece & source, const pair<int,int> & position, OrientationSymetrie sens);
 	OrientationSymetrie& getSens();
     virtual void accept(const PieceOperateur &v);
-	//virtual void visit(OperateurDeplacement &x) const ;
-	//virtual void visit(OperateurRotation &x) const;
+	virtual void visit(OperateurDeplacement &x) const ;
+	virtual void visit(OperateurRotation &x) const;
 	virtual void visit(OperateurSymetrie &x) const;
 	
 	virtual void mapPosition( pair<int, int> & pos) const ;

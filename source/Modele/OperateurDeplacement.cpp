@@ -13,7 +13,7 @@ void OperateurDeplacement::visit(OperateurDeplacement &x) const {
 }
 
 void OperateurDeplacement::visit(OperateurRotation &x) const{
-
+    //mapPosition(x.getPosition());
 }
 
 void OperateurDeplacement::visit(OperateurSymetrie &x) const{

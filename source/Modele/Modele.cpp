@@ -1,5 +1,8 @@
 #include "Modele/PieceConcrete.hpp"
 #include "Modele/OperateurDeplacement.hpp"
+#include "Modele/OperateurRotation.hpp"
+#include "Modele/OperateurSymetrie.hpp"
+
 
 void afficher(Piece& p)
 {
@@ -40,6 +43,9 @@ int main() {
 	PieceConcrete tetris_L(coords);
 	//afficher(tetris_L);
 	Piece *p = new OperateurDeplacement {tetris_L,{0,0},OrientationDeplacement::EST};
+	Piece *r = new OperateurRotation {tetris_L,{1,1},OrientationRotation::ANTIHORAIRE};
+	Piece *s = new OperateurSymetrie {tetris_L,{1,1},OrientationSymetrie::HORIZONTALE};
+
 	/*p->trigger(make_pair(0,0));
 	afficher(tetris_L);
 	p->trigger(make_pair(1,0));
@@ -49,11 +55,18 @@ int main() {
 	int x, y;
 	while (exit)
 	{
-		afficher(tetris_L);
-		cout << "Entrez trois entiers" << endl;
-		cin >> x >> y >> exit;
-		p->trigger(make_pair(x,y));
-		afficher(tetris_L);
+		cout << "Voulez vous jouer? 1:oui 0:non" << endl;
+		cin >> exit;
+		if(exit)
+		{
+			afficher(tetris_L);
+			cout << "Entrez deux entiers" << endl;
+			cin >> x >> y;
+			p->trigger(make_pair(x,y));
+			r->trigger(make_pair(x,y));
+			//s->trigger(make_pair(x,y));
+			afficher(tetris_L);
+		}
 	}
 	
 }

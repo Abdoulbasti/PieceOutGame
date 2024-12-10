@@ -3,6 +3,7 @@
 
 #include "PieceOperateur.hpp"
 #include "OrientationDeplacement.hpp"
+#include "OperateurRotation.hpp"
 
 class OperateurDeplacement : public PieceOperateur
 {
