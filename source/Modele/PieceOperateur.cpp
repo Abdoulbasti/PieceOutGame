@@ -6,7 +6,7 @@ PieceOperateur::PieceOperateur(Piece & source, const pair<int,int> & position)
 
 vector<pair<int, int>>& PieceOperateur::getCoordinates() {return source.getCoordinates();}
 
-pair<int, int> PieceOperateur::getPosition() const { return position;}
+pair<int, int>& PieceOperateur::getPosition() { return position;}
 
 void PieceOperateur::trigger(const pair<int,int> & relativePos, Piece &origin) {
     if (relativePos==position) origin.accept(*this);

@@ -15,7 +15,7 @@ class PieceOperateur : public Piece {
 	Piece & source;
 	PieceOperateur(Piece & source, const pair<int,int> & position);
 	vector<pair<int, int>>& getCoordinates();
-	pair<int, int> getPosition() const;
+	pair<int, int>& getPosition();
 	void trigger(const pair<int,int> & relativePos, Piece &origin);
 	
 	virtual void mapPosition(pair<int, int> &) const =0; 

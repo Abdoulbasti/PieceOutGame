@@ -7,10 +7,11 @@ using namespace sf;
 int main() {
 	// Parametres graphiques, à replacer au bon endroit
 	int MARGIN_LEFT=100, MARGIN_RIGHT=100, MARGIN_TOP=100, MARGIN_BOTTOM=100;
-	int TILE_SIZE=64;
+	int TILE_SIZE=34;
 	int NB_COL=8, NB_LIGNE=10;
 	unsigned int nbPix_x=MARGIN_LEFT+MARGIN_RIGHT+NB_COL*TILE_SIZE;
 	unsigned int nbPix_y=MARGIN_TOP+MARGIN_BOTTOM+NB_LIGNE*TILE_SIZE;
+
     // définition d'un panneau "central"
     RectangleShape centralPane(Vector2f(NB_COL*TILE_SIZE,NB_LIGNE*TILE_SIZE));
 	centralPane.setPosition(MARGIN_LEFT,MARGIN_TOP);
@@ -43,7 +44,7 @@ int main() {
         	return EXIT_FAILURE;
     	}
 	// Opérations graphiques générales
-	RenderWindow window{ VideoMode{nbPix_x,nbPix_y},"Piece Out",Style::Fullscreen };
+	RenderWindow window{ VideoMode{nbPix_x,nbPix_y},"Piece Out" };
     	while (window.isOpen()) {
     		int trig_x=-1, trig_y=-1;
                 Vector2i mousePos = Mouse::getPosition(window);

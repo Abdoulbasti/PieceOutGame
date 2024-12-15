@@ -4,6 +4,7 @@
 #include "PieceOperateur.hpp"
 #include "OrientationDeplacement.hpp"
 #include "OperateurRotation.hpp"
+#include "OperateurSymetrie.hpp"
 
 class OperateurDeplacement : public PieceOperateur
 {

@@ -42,15 +42,10 @@ int main() {
 	vector<pair<int, int>> coords { {0, 0}, {0, 1}, {0, 2}, {1, 2}};     
 	PieceConcrete tetris_L(coords);
 	//afficher(tetris_L);
-	Piece *p = new OperateurDeplacement {tetris_L,{0,0},OrientationDeplacement::EST};
-	Piece *r = new OperateurRotation {tetris_L,{1,1},OrientationRotation::ANTIHORAIRE};
-	Piece *s = new OperateurSymetrie {tetris_L,{1,1},OrientationSymetrie::HORIZONTALE};
-
-	/*p->trigger(make_pair(0,0));
-	afficher(tetris_L);
-	p->trigger(make_pair(1,0));
-	afficher(tetris_L);*/
-
+	Piece *p = new OperateurDeplacement {tetris_L,{0,0},OrientationDeplacement::NORD};
+	Piece *p1 = new OperateurDeplacement {*p,{0,2},OrientationDeplacement::SUD};
+	Piece *r = new OperateurRotation {*p1,{0,1},OrientationRotation::ANTIHORAIRE};
+	Piece *s = new OperateurSymetrie {*r,{1,2},OrientationSymetrie::HORIZONTALE};
 	int exit = 1;
 	int x, y;
 	while (exit)
@@ -62,9 +57,7 @@ int main() {
 			afficher(tetris_L);
 			cout << "Entrez deux entiers" << endl;
 			cin >> x >> y;
-			p->trigger(make_pair(x,y));
-			r->trigger(make_pair(x,y));
-			//s->trigger(make_pair(x,y));
+			s->trigger(make_pair(x,y));
 			afficher(tetris_L);
 		}
 	}

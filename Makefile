@@ -2,16 +2,19 @@ CPP=g++ --std=c++11 -Wall -Wextra -Iinclude
 LSFML_OPTIONS=-lsfml-system -lsfml-graphics -lsfml-window
 SOURCE_MODELE_DIR=source/Modele
 INCLUDE_MODELE_DIR=include/Modele
+SOURCE_VUE_DIR=source/Vue
+INCLUDE_VUE_DIR=include/Vue
 BD_DIR=build
 
 # La Liste des fichiers objets pour le modele
 #Ajouter ici d'autres objet .o 
 OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
-					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o 
 
 # La Liste des fichiers objets pour la vue
 #Ajouter ici d'autres objet .o 
-OBJ_VUE_LIST = $(BD_DIR)/ebaucheVue.o 
+OBJ_VUE_LIST = $(BD_DIR)/Vue.o $(BD_DIR)/Grille.o $(BD_DIR)/EntreeSortie.o $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o $(BD_DIR)/Decorer.o
 
 
 #--------------------------------------- compilation du modele ------------------------------------------#
@@ -58,26 +61,20 @@ $(BD_DIR)/ProgramVue : $(OBJ_VUE_LIST)
 	$(CPP) -o $(BD_DIR)/ProgramVue $(OBJ_VUE_LIST) $(LSFML_OPTIONS)
 	./$(BD_DIR)/ProgramVue
 
-$(BD_DIR)/ebaucheVue.o : ebaucheVue.cpp
+$(BD_DIR)/Vue.o : $(SOURCE_VUE_DIR)/Vue.cpp
 	mkdir -p build
-	$(CPP) -c ebaucheVue.cpp -o $(BD_DIR)/ebaucheVue.o
+	$(CPP) -c $(SOURCE_VUE_DIR)/Vue.cpp -o $(BD_DIR)/Vue.o
+
+$(BD_DIR)/Grille.o : $(SOURCE_VUE_DIR)/Grille.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Grille.cpp -o $(BD_DIR)/Grille.o $(LSFML_OPTIONS)
+
+$(BD_DIR)/EntreeSortie.o : $(SOURCE_VUE_DIR)/EntreeSortie.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/EntreeSortie.cpp -o $(BD_DIR)/EntreeSortie.o
+
+$(BD_DIR)/Decorer.o : $(SOURCE_VUE_DIR)/Decorer.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Decorer.cpp -o $(BD_DIR)/Decorer.o
 #Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_VUE_LIST
 
 clean_vue :
 	rm -f *.o $(BD_DIR)/ebaucheVue.o $(BD_DIR)/ProgramVue
 	
-
-
-#-----------------------------------------------------------------------------#
-#all_vue : ebaucheVue
-
-#ebaucheVue : $(OBJ_VUE_LIST)
-#	$(CPP) -o $(BD_DIR)/ProgramVue $(OBJ_VUE_LIST) $(LSFML_OPTIONS)
-#	./$(BD_DIR)/ProgramVue
-
-#$(BD_DIR)/ebaucheVue.o : ebaucheVue.cpp
-#	$(CPP) -c ebaucheVue.cpp -o $(BD_DIR)/ebaucheVue.o
-#Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_VUE_LIST
-
-#clean :
-#	rm *.o $(BD_DIR)/ebaucheVue.o $(BD_DIR)/ebaucheVue
