@@ -51,31 +51,21 @@ void OperateurSymetrie::visit(OperateurDeplacement &x) const
     x.source.accept(*this);
 }
 
-void OperateurSymetrie::mapPosition( pair<int, int> & pos) const
-{
-     if(position.first != pos.first|| position.second != pos.second )
-    {
-        switch (sens) {
-            case OrientationSymetrie::VERTICALE : 
-                if (position.first == pos.first and position.second < pos.second ) {pos.second-=2*(pos.second-position.second);}
-                else if (position.first == pos.first and position.second > pos.second ) {pos.second+=2*(position.second-pos.second);}
-                else if (position.first > pos.first and position.second == pos.second ) {/*on ne fait rien*/}
-                else if (position.first < pos.first and position.second == pos.second ) {/*on ne fait rien*/}
-                else if (position.first < pos.first and position.second < pos.second ) {pos.second-=2*(pos.second-position.second);}
-                else if (position.first > pos.first and position.second < pos.second ) {pos.second-=2*(pos.second-position.second);}
-                else if (position.first < pos.first and position.second > pos.second ) {pos.second+=2*(position.second-pos.second);}   
-                else if (position.first > pos.first and position.second > pos.second ) {pos.second+=2*(position.second-pos.second);}                
-                break;
-            case OrientationSymetrie::HORIZONTALE :
-                if (position.first == pos.first and position.second < pos.second ) {/*rien*/}
-                else if (position.first == pos.first and position.second > pos.second ) {/*rien*/}
-                else if (position.first > pos.first and position.second == pos.second ) {pos.first+=2*(position.first-pos.first);}
-                else if (position.first < pos.first and position.second == pos.second ) {pos.first-=2*(pos.first-position.first);}
-                else if (position.first < pos.first and position.second < pos.second ) {pos.first-=2*(pos.first-position.first);}
-                else if (position.first > pos.first and position.second < pos.second ) {pos.first+=2*(position.first-pos.first);}
-                else if (position.first < pos.first and position.second > pos.second ) {pos.first-=2*(pos.first-position.first);}   
-                else if (position.first > pos.first and position.second > pos.second ) {pos.first+=2*(position.first-pos.first);}                
-                break;
-        }
+void OperateurSymetrie::mapPosition(pair<int, int>& pos) const {
+    if (position.first == pos.first && position.second == pos.second) {
+        // Si la position de référence et celle donnée sont identiques, rien à faire
+        return;
+    }
+
+    switch (sens) {
+        case OrientationSymetrie::VERTICALE:
+            // La symétrie verticale modifie uniquement la coordonnée `second` (colonne)
+            pos.second = position.second - (pos.second - position.second);
+            break;
+
+        case OrientationSymetrie::HORIZONTALE:
+            // La symétrie horizontale modifie uniquement la coordonnée `first` (ligne)
+            pos.first = position.first - (pos.first - position.first);
+            break;
     }
 }

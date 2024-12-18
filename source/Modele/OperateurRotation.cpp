@@ -72,8 +72,6 @@ void OperateurRotation::mapPosition( pair<int, int> & pos) const
                 pos.second = rotatedY + position.second;
 
                 break;
-
-
             case OrientationRotation::ANTIHORAIRE :
                 translatedX = pos.first - position.first;
                 translatedY = pos.second - position.second;

@@ -9,7 +9,7 @@ BD_DIR=build
 # La Liste des fichiers objets pour le modele
 #Ajouter ici d'autres objet .o 
 OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
-					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o 
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o $(BD_DIR)/Plateau.o
 
 # La Liste des fichiers objets pour la vue
 #Ajouter ici d'autres objet .o 
@@ -46,6 +46,9 @@ $(BD_DIR)/OperateurSymetrie.o : $(SOURCE_MODELE_DIR)/OperateurSymetrie.cpp
 
 $(BD_DIR)/OperateurRotation.o : $(SOURCE_MODELE_DIR)/OperateurRotation.cpp 
 	$(CPP) -c  $(SOURCE_MODELE_DIR)/OperateurRotation.cpp -o $(BD_DIR)/OperateurRotation.o
+
+$(BD_DIR)/Plateau.o : $(SOURCE_MODELE_DIR)/Plateau.cpp
+	$(CPP) -c $(SOURCE_MODELE_DIR)/Plateau.cpp -o $(BD_DIR)/Plateau.o
 #Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_MODELE_LIST
 
 clean_modele :

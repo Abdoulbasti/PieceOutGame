@@ -1,51 +1,45 @@
-#include "Modele/PieceConcrete.hpp"
-#include "Modele/OperateurDeplacement.hpp"
-#include "Modele/OperateurRotation.hpp"
-#include "Modele/OperateurSymetrie.hpp"
+#include "Modele/Plateau.hpp"
 
 
-void afficher(Piece& p)
-{
-	vector<pair<int, int>> coords = p.getCoordinates();
-    // Définir la taille de la matrice
-    int rows = 10;  // L'axe des ordonnées va de 0 à 1
-    int cols = 10;  // L'axe des abscisses va de 0 à 2
-    
-    // Créer une matrice vide avec des espaces
-    vector<vector<char>> matrix(rows, vector<char>(cols, ' '));
-    
-    // Marquer les positions avec des '#'
-    for (const auto& coord : coords) {
-        int x = coord.first;
-        int y = coord.second;
-        matrix[y][x] = '#';
-    }
-    
-    // Affichage de la matrice
-    cout << "  0 1 2 3 4 5 6 7 8 9" << endl; // Afficher l'axe des abscisses
-    for (int i = 0; i < rows; ++i) {
-        if (i == 0) {
-            cout << i << " ";
-        } else {
-            cout << i << " "; // Afficher l'axe des ordonnées
-        }
-        
-        for (int j = 0; j < cols; ++j) {
-            cout << matrix[i][j] << " "; // Afficher les valeurs de la matrice
+
+int main() {
+	vector<pair<int, int>> coords { {0, 4}, {1, 4}, {2, 4}, {2, 5}};     
+	PieceConcrete tetris_L(coords);
+    coords = {{2, 3}, {3, 3}, {4, 3}, {3, 4}};
+    PieceConcrete tetris_T(coords);
+    coords = {{3,5}, {4,5}, {5,5}, {5, 4}};
+    PieceConcrete tetris_J(coords);
+    coords = {{4, 6}, {4, 7}};
+    PieceConcrete tetris_I(coords);
+    //Decoration de la piece L
+	Piece *l = new OperateurDeplacement {tetris_L,{0,4},OrientationDeplacement::OUEST};
+	l = new OperateurDeplacement {*l,{2,4},OrientationDeplacement::EST};
+	l = new OperateurRotation {*l,{1,4},OrientationRotation::ANTIHORAIRE};
+    //Decoration de la piece T
+    Piece *t = new OperateurRotation {tetris_T,{3, 3},OrientationRotation::ANTIHORAIRE};
+    //Decoration de la piece J
+    Piece *j = new OperateurDeplacement {tetris_J,{3,5},OrientationDeplacement::OUEST};
+    j = new OperateurDeplacement {*j,{5,5},OrientationDeplacement::EST};
+    //Decoration de la piece I
+    Piece *i = new OperateurDeplacement {tetris_I,{4,6},OrientationDeplacement::NORD};
+    i = new OperateurDeplacement {*i,{4,7},OrientationDeplacement::SUD};
+
+    //création de plateau de jeu
+    Plateau * P = new Plateau{6,8};
+    //elimination des cases non jouables
+    P->placerPiece(tetris_L,'B');
+    P->placerPiece(tetris_T,'V');
+    P->placerPiece(tetris_J,'M');
+    P->placerPiece(tetris_I,'R');
+    cout << "État initial de la grille :" << endl;
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 6; ++j) {
+            cout << ( P->getCases()[i][j] == EtatCase::JOUABLE_LIBRE ? "JL " :
+                      P->getCases()[i][j] == EtatCase::JOUABLE_OCCUPEE ? "JO " :
+                     "NJ ");
         }
         cout << endl;
     }
-
-}
-
-int main() {
-	vector<pair<int, int>> coords { {0, 0}, {0, 1}, {0, 2}, {1, 2}};     
-	PieceConcrete tetris_L(coords);
-	//afficher(tetris_L);
-	Piece *p = new OperateurDeplacement {tetris_L,{0,0},OrientationDeplacement::NORD};
-	Piece *p1 = new OperateurDeplacement {*p,{0,2},OrientationDeplacement::SUD};
-	Piece *r = new OperateurRotation {*p1,{0,1},OrientationRotation::ANTIHORAIRE};
-	Piece *s = new OperateurSymetrie {*r,{1,2},OrientationSymetrie::HORIZONTALE};
 	int exit = 1;
 	int x, y;
 	while (exit)
@@ -54,11 +48,25 @@ int main() {
 		cin >> exit;
 		if(exit)
 		{
-			afficher(tetris_L);
+			P->afficher();
 			cout << "Entrez deux entiers" << endl;
 			cin >> x >> y;
-			s->trigger(make_pair(x,y));
-			afficher(tetris_L);
+            if(P->estOperationValide(*l,x,y) || P->estOperationValide(*t,x,y) || P->estOperationValide(*i,x,y) || P->estOperationValide(*j,x,y))
+            {
+                for (int i = 0; i < 8; ++i) {
+                    for (int j = 0; j < 6; ++j) {
+                        cout << ( P->getCases()[i][j] == EtatCase::JOUABLE_LIBRE ? "JL " :
+                                P->getCases()[i][j] == EtatCase::JOUABLE_OCCUPEE ? "JO " :
+                                "NJ ");
+                    }
+                   cout << endl;
+                }
+                l->trigger(make_pair(x,y));
+                t->trigger(make_pair(x,y));
+                i->trigger(make_pair(x,y));
+                j->trigger(make_pair(x,y));
+            }
+			P->afficher();
 		}
 	}
 	
