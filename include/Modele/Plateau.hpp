@@ -32,5 +32,8 @@ class Plateau
         bool estOperationValide(Piece &p,int x,int y); // verifie si une operation peut etre effectuée dans sur une piéce donnée
         void initialiserNonJouable(vector<pair<int,int>> vecteur); // Définit une case comme non jouable
         void afficher() const; // Affiche la grille (pour débogage)
+        void initialiserJouableGain(vector<pair<int,int>> vecteur);
+        void detectionGain(vector<pair<int,int>>& coordsGain, Piece* i, int exit);
+        bool estUnGain(int x, int y) const;
 };
 #endif

@@ -19,6 +19,7 @@ bool Plateau::estOccupee(int x, int y) const
 {
     return  cases[y][x] == EtatCase::JOUABLE_OCCUPEE;
 }
+
 bool Plateau::estDansLimites(Piece& piece) const  
 {
     for (auto v : piece.getCoordinates())
@@ -117,12 +118,17 @@ void Plateau::initialiserNonJouable(vector<pair<int,int>> vecteur)
         } 
     }
 }
+
 void Plateau::afficher() const {
     // Créer une matrice vide avec des espaces
     vector<vector<char>> matrix(NB_LIGNE, vector<char>(NB_COL, '.'));
     for (int i = 0; i < NB_LIGNE; ++i) {
-        for (int j = 0; j < NB_COL; ++j) 
+        for (int j = 0; j < NB_COL; ++j){
             if(cases[i][j]==EtatCase::NON_JOUABLE) matrix[i][j] = ' ';
+
+            //Etat des cellules gagnante
+            if(cases[i][j]==EtatCase::JOUABLE_GAIN) matrix[i][j] = '!';
+        }
     }
     // Marquer les positions avec des couleurs correspondantes
     for (const auto& piece : piecesEtCouleurs) {
@@ -147,5 +153,34 @@ void Plateau::afficher() const {
             cout << matrix[i][j] << " ";
         }
         cout << endl;
+    }
+}
+
+bool Plateau::estUnGain(int x, int y) const
+{
+    return  cases[y][x] == EtatCase::JOUABLE_GAIN;
+}
+
+//initialiation des cellules(piece) gagnantes
+void Plateau::initialiserJouableGain(vector<pair<int,int>> vecteur)
+{
+    for (auto v : vecteur)
+    {
+        if (v.first >= 0 && v.first < NB_COL && v.second >= 0 && v.second < NB_LIGNE) {
+            cases[v.second][v.first] = EtatCase::JOUABLE_GAIN;
+        } 
+    }
+}
+
+//Detection de gain dans une configuration
+void Plateau::detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int exit)
+{
+    vector<pair<int,int>> iCoordsCourant = pieceAPlacer->getCoordinates(); //recuperer ces coordonnées courants
+    sort(coordsGain.begin(), coordsGain.end());
+    sort(iCoordsCourant.begin(), iCoordsCourant.end());
+    if ( coordsGain == iCoordsCourant)
+    {
+        exit = 0; //Terminer le jeu
+        cout << "############################ YOUPI... VOUS AVEZ GAGNE !!!###############################" << endl;
     }
 }
