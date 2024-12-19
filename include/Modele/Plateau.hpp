@@ -33,7 +33,7 @@ class Plateau
         void initialiserNonJouable(vector<pair<int,int>> vecteur); // Définit une case comme non jouable
         void afficher() const; // Affiche la grille (pour débogage)
         void initialiserJouableGain(vector<pair<int,int>> vecteur);
-        void detectionGain(vector<pair<int,int>>& coordsGain, Piece* i, int exit);
+        void detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int &exit);
         bool estUnGain(int x, int y) const;
 };
 #endif

@@ -173,7 +173,7 @@ void Plateau::initialiserJouableGain(vector<pair<int,int>> vecteur)
 }
 
 //Detection de gain dans une configuration
-void Plateau::detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int exit)
+void Plateau::detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int &exit)
 {
     vector<pair<int,int>> iCoordsCourant = pieceAPlacer->getCoordinates(); //recuperer ces coordonnées courants
     sort(coordsGain.begin(), coordsGain.end());
