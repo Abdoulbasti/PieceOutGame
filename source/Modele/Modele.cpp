@@ -27,19 +27,14 @@ int main() {
     //création de plateau de jeu
     Plateau * P = new Plateau{6,8};
     //elimination des cases non jouables
+    coords = {{0,0},{1,0},{2,0},{3,0},{5,0},{0,1},{1,1},{2,1},{3,1},{5,1},{0,2},{5,2},{0,3},{5,3},{0,6},{1,6},{2,6},{3,6},{5,6},{0,7},{1,7},{2,7},{3,7},{5,7}};
+    P->initialiserNonJouable(coords);
+    //plaçage des pieces
     P->placerPiece(tetris_L,'B');
     P->placerPiece(tetris_T,'V');
     P->placerPiece(tetris_J,'M');
     P->placerPiece(tetris_I,'R');
-    cout << "État initial de la grille :" << endl;
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 6; ++j) {
-            cout << ( P->getCases()[i][j] == EtatCase::JOUABLE_LIBRE ? "JL " :
-                      P->getCases()[i][j] == EtatCase::JOUABLE_OCCUPEE ? "JO " :
-                     "NJ ");
-        }
-        cout << endl;
-    }
+    
 	int exit = 1;
 	int x, y;
 	while (exit)
@@ -53,14 +48,6 @@ int main() {
 			cin >> x >> y;
             if(P->estOperationValide(*l,x,y) || P->estOperationValide(*t,x,y) || P->estOperationValide(*i,x,y) || P->estOperationValide(*j,x,y))
             {
-                for (int i = 0; i < 8; ++i) {
-                    for (int j = 0; j < 6; ++j) {
-                        cout << ( P->getCases()[i][j] == EtatCase::JOUABLE_LIBRE ? "JL " :
-                                P->getCases()[i][j] == EtatCase::JOUABLE_OCCUPEE ? "JO " :
-                                "NJ ");
-                    }
-                   cout << endl;
-                }
                 l->trigger(make_pair(x,y));
                 t->trigger(make_pair(x,y));
                 i->trigger(make_pair(x,y));
