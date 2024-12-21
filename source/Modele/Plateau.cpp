@@ -42,7 +42,7 @@ bool Plateau::peutPlacer( Piece& piece) const
     }
     return false;
 }   
-bool Plateau::placerPiece( Piece& piece,char c) 
+bool Plateau::placerPiece( Piece& piece,int c) 
 {
     if (peutPlacer(piece))
     {
@@ -156,31 +156,51 @@ void Plateau::afficher() const {
     }
 }
 
-bool Plateau::estUnGain(int x, int y) const
-{
-    return  cases[y][x] == EtatCase::JOUABLE_GAIN;
-}
-
 //initialiation des cellules(piece) gagnantes
-void Plateau::initialiserJouableGain(vector<pair<int,int>> vecteur)
+void Plateau::initialiserJouableGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur)
 {
-    for (auto v : vecteur)
-    {
-        if (v.first >= 0 && v.first < NB_COL && v.second >= 0 && v.second < NB_LIGNE) {
-            cases[v.second][v.first] = EtatCase::JOUABLE_GAIN;
-        } 
+    for (const auto& config : vecteur) 
+    { 
+        for (auto v : config.first)
+        {
+            if (v.first >= 0 && v.first < NB_COL && v.second >= 0 && v.second < NB_LIGNE) {
+                cases[v.second][v.first] = EtatCase::JOUABLE_GAIN;
+            } 
+        }
     }
 }
-
-//Detection de gain dans une configuration
-void Plateau::detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int &exit)
+bool Plateau::estDansGain(vector<pair<int, int>> vecteur, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain)
 {
-    vector<pair<int,int>> iCoordsCourant = pieceAPlacer->getCoordinates(); //recuperer ces coordonnées courants
-    sort(coordsGain.begin(), coordsGain.end());
-    sort(iCoordsCourant.begin(), iCoordsCourant.end());
-    if ( coordsGain == iCoordsCourant)
-    {
-        exit = 0; //Terminer le jeu
-        cout << "############################ YOUPI... VOUS AVEZ GAGNE !!!###############################" << endl;
+    for (const auto& config : vecteurgain) {
+        // Récupère les coordonnées de gain associées à la pièce dans la paire
+        vector<pair<int, int>> coordsGain = config.first; // Coordonnées gagnantes à vérifier
+        // Trie les deux ensembles de coordonnées pour une comparaison fiable
+        sort(coordsGain.begin(), coordsGain.end());
+        sort(vecteur.begin(), vecteur.end());
+
+        // Compare les coordonnées
+        if (coordsGain == vecteur) {
+            return true; // Quitte la fonction dès qu'un gain n'est pas détecté
+        }
     }
+    return false;
+}
+
+vector<pair<int, int>> Plateau::estPieceGain(Piece* p, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain)
+{
+    for (const auto& config : vecteurgain)
+    {
+        if(p == config.second) return config.first;
+    }
+}
+//Detection de gain dans une configuration
+void Plateau::detectionGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur, int& exit) {
+    for (const auto& config : vecteur) {
+        Piece* pieceAPlacer = config.second;              // Pièce associée
+         // Récupérer les coordonnées de la pièce
+        vector<pair<int, int>> coordsPiece = pieceAPlacer->getCoordinates();
+        if(!estDansGain(coordsPiece,vecteur)) return;
+    }
+    exit = 0; // Terminer le jeu
+    cout << "############ YOUPI... VOUS AVEZ GAGNE !!! ##############" << endl;
 }

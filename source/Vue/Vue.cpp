@@ -1,63 +1,186 @@
-#include "Vue/Grille.hpp"
+#include "Vue/VuePlateau.hpp"
 #include "Vue/Decorer.hpp"
-#include "Vue/EntreeSortie.hpp"
-#include <cstdlib>
-#include <ctime>
-#include "Modele/PieceConcrete.hpp"
-#include "Modele/OperateurDeplacement.hpp"
-#include "Modele/OperateurRotation.hpp"
-#include "Modele/OperateurSymetrie.hpp"
+#include <SFML/Audio.hpp>
 
-//Déclaration des variables globales
-int MARGIN_LEFT=100, MARGIN_RIGHT=100, MARGIN_TOP=100, MARGIN_BOTTOM=100,TILE_SIZE=34,NB_COL=8, NB_LIGNE=10;
+
+// Déclaration des variables globales
+int MARGIN_LEFT = 100, MARGIN_RIGHT = 100, MARGIN_TOP = 100, MARGIN_BOTTOM = 100, TILE_SIZE = 34, NB_COL = 6, NB_LIGNE = 8;
 
 int main() {
-    
-    //déclration des variables locales
-    unsigned int nbPix_x=MARGIN_LEFT+MARGIN_RIGHT+NB_COL*TILE_SIZE;
-	unsigned int nbPix_y=MARGIN_TOP+MARGIN_BOTTOM+NB_LIGNE*TILE_SIZE;
+    // Déclaration et initialisation des variables locales
+    unsigned int nbPix_x = MARGIN_LEFT + MARGIN_RIGHT + NB_COL * TILE_SIZE;
+    unsigned int nbPix_y = MARGIN_TOP + MARGIN_BOTTOM + NB_LIGNE * TILE_SIZE;
     vector<Drawable*> scene_generale;
     vector<Drawable*> scene_particuliere;
-    Texture texture_rouge;
-    //Déclaration et initialisation de la grille
-    Grille * G = new Grille(TILE_SIZE,NB_COL,NB_LIGNE,MARGIN_LEFT,MARGIN_RIGHT,MARGIN_TOP,MARGIN_BOTTOM);
-	//Créatiion des pieces
-	Vector2i premier_coord = G->genererPointAleatoire();
-	vector<pair<int, int>> coords {{premier_coord.x, premier_coord.y}, {premier_coord.x, premier_coord.y+1}, {premier_coord.x, premier_coord.y+2}, {premier_coord.x+1, premier_coord.y+2}};
-	PieceConcrete Tetris_L(coords);
-	premier_coord = G->genererPointAleatoire();
-	coords = { {premier_coord.x, premier_coord.y}, {premier_coord.x, premier_coord.y+1}, {premier_coord.x, premier_coord.y+2}, {premier_coord.x-1, premier_coord.y+2}};
-	PieceConcrete Tetris_J(coords);
-	//dessiner les pieces
-	G->placerPiece(Tetris_L,Color::Blue,scene_particuliere);
-	G->placerPiece(Tetris_J,Color::Red,scene_particuliere);
-	Decorer::ajouterSymboleDeplacement(scene_particuliere,*G,Vector2f{1,5},Color::White,OrientationDeplacement::NORD);
-	Decorer::ajouterSymboleDeplacement(scene_particuliere,*G,Vector2f{1,7},Color::White,OrientationDeplacement::SUD);
-	Decorer::ajouterSymboleDeplacement(scene_particuliere,*G,Vector2f{0,7},Color::White,OrientationDeplacement::OUEST);
-	Decorer::ajouterSymboleRotation(scene_particuliere,*G,Vector2f{1,6},Color::White,true);
 
-    // on peut (ou pas) distinguer la scène générale cadre+frame et la scène particulière (les cases actuelles)
+    // Déclaration et initialisation de la grille
+    VuePlateau* G = new VuePlateau(TILE_SIZE, NB_COL, NB_LIGNE, MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, MARGIN_BOTTOM);
+
+    // Création des pièces
+    vector<pair<int, int>> coords{{0, 4}, {1, 4}, {2, 4}, {2, 5}};
+    PieceConcrete tetris_L(coords);
+    coords = {{2, 3}, {3, 3}, {4, 3}, {3, 4}};
+    PieceConcrete tetris_T(coords);
+    coords = {{3, 5}, {4, 5}, {5, 5}, {5, 4}};
+    PieceConcrete tetris_J(coords);
+    coords = {{4, 6}, {4, 7}};
+    PieceConcrete tetris_I(coords);
+
+    // Décoration des pièces
+    Piece* l = new OperateurDeplacement{tetris_L, {0, 4}, OrientationDeplacement::OUEST};
+    l = new OperateurDeplacement{*l, {2, 4}, OrientationDeplacement::EST};
+    l = new OperateurRotation{*l, {1, 4}, OrientationRotation::ANTIHORAIRE};
+
+    Piece* t = new OperateurRotation{tetris_T, {3, 3}, OrientationRotation::ANTIHORAIRE};
+
+    Piece* j = new OperateurDeplacement{tetris_J, {3, 5}, OrientationDeplacement::OUEST};
+    j = new OperateurDeplacement{*j, {5, 5}, OrientationDeplacement::EST};
+
+    Piece* i = new OperateurDeplacement{tetris_I, {4, 6}, OrientationDeplacement::NORD};
+    i = new OperateurDeplacement{*i, {4, 7}, OrientationDeplacement::SUD};
+
+    // Création du plateau de jeu
+    Plateau* P = new Plateau{NB_COL, NB_LIGNE};
+
+    // Élimination des cases non jouables
+    coords = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {5, 0}, {0, 1}, {1, 1}, {2, 1}, {3, 1}, {5, 1}, {0, 2}, {5, 2},
+              {0, 3}, {5, 3}, {0, 6}, {1, 6}, {2, 6}, {3, 6}, {5, 6}, {0, 7}, {1, 7}, {2, 7}, {3, 7}, {5, 7}};
+    P->initialiserNonJouable(coords);
+
+    // Définition des cases gagnantes
+    vector<pair<vector<pair<int, int>>, Piece*>> vecteurGain = {{{{4, 0}, {4, 1}}, i},{{{0,5},{1,5},{2,5},{2,4}},j}};
+    P->initialiserJouableGain(vecteurGain);
+
+    // Placement des pièces sur le plateau
+    P->placerPiece(*l, 'B');
+    P->placerPiece(*t, 'G');
+    P->placerPiece(*j, 'Y');
+    P->placerPiece(*i, 'R');
+
+    // Initialisation des scènes
     scene_generale.push_back(&G->getCentralPane());
     scene_generale.push_back(&G->getTrame());
-    // on place ici la définition d'une texture rouge, probablement qu'il y a mieux à faire (flightweight ? map ?)
-    	if (!texture_rouge.loadFromFile("ressources/texture.jpg")) {
-    		cerr << "Erreur lors du chargement de l'image" << endl;
-        	return EXIT_FAILURE;
-    	}
-	// Opérations graphiques générales
-	RenderWindow window{VideoMode{nbPix_x,nbPix_y},"Piece Out" };
-	while (window.isOpen()) 
-	{
-		EntreeSortie::gererSouris(window,*G,texture_rouge,scene_particuliere);
-		//nettoyagede la grille
-		window.clear();
-		window.setView(window.getDefaultView());
-		// les affichages
-		for (Drawable * x:scene_generale) window.draw(*x);		
-		for (Drawable * x:scene_particuliere) window.draw(*x);
-		window.display();
+    G->tracerPiece(scene_particuliere, scene_generale, *P);
+	G->tracerCaseGain(scene_generale,vecteurGain);
+
+    // Décoration des pièces
+    Decorer* D = new Decorer();
+    D->decoration(scene_particuliere, *l, *G);
+    D->decoration(scene_particuliere, *t, *G);
+    D->decoration(scene_particuliere, *j, *G);
+    D->decoration(scene_particuliere, *i, *G);
+
+    // Création de la fenêtre graphique
+    RenderWindow window{VideoMode{nbPix_x, nbPix_y}, "Piece Out"};
+
+	// Charger la musique de fond
+		Music musiqueDeFond;
+		if (!musiqueDeFond.openFromFile("ressources/sounds/playful.ogg")) {
+			std::cerr << "Erreur de chargement de la musique de fond" << std::endl;
+		}
+
+		// Jouer la musique en boucle
+		musiqueDeFond.setLoop(true);  // La musique boucle indéfiniment
+		musiqueDeFond.play();
+
+    // Boucle principale
+    while (window.isOpen()) {
+        int exit = 1;
+        int trig_x = -1, trig_y = -1;
+        Vector2i mousePos = Mouse::getPosition(window);
+        Vector2f mouseWorldPos = window.mapPixelToCoords(mousePos);
+
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)) {
+                window.close();
+            }
+            if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left &&
+                G->estDansVuePlateau(mouseWorldPos)) {
+                trig_x = (mouseWorldPos.x - G->getPosition().x) / TILE_SIZE;
+                trig_y = (mouseWorldPos.y - G->getPosition().y) / TILE_SIZE;
+
+                if (P->estOperationValide(*l, trig_x, trig_y) || P->estOperationValide(*t, trig_x, trig_y) ||
+                    P->estOperationValide(*i, trig_x, trig_y) || P->estOperationValide(*j, trig_x, trig_y)) {
+                    l->trigger({trig_x, trig_y});
+                    t->trigger({trig_x, trig_y});
+                    i->trigger({trig_x, trig_y});
+                    j->trigger({trig_x, trig_y});
+
+                    // Détection de gain avec animation de fin
+                    P->detectionGain(vecteurGain, exit);
+                    if (!exit) {
+                        for (int i = 0; i < 5; ++i) {
+                            window.clear(Color::White);  // Clignotement  pour signaler la victoire
+                            window.display();
+                            sf::sleep(sf::milliseconds(300));
+
+                            window.clear(Color::Black);
+                            window.display();
+                            sf::sleep(sf::milliseconds(300));
+                        }
+
+                        // Affichage du message de victoire
+                        Font font;
+                        if (!font.loadFromFile("ressources/fonts/arial.ttf")) {
+                            cerr << "Erreur : Impossible de charger la police arial.ttf !" << endl;
+                            return EXIT_FAILURE;
+                        }
+                        Text victoryText("PARTIE TERMINEE !", font, 35);
+                        victoryText.setFillColor(Color::Red);
+                        victoryText.setPosition(nbPix_x / 2 - victoryText.getGlobalBounds().width / 2, nbPix_y / 2 - 50);
+
+                        for (int i = 0; i < 3000; i += 100) {
+                            window.clear();
+                            window.draw(victoryText);
+                            window.display();
+                            sf::sleep(sf::milliseconds(100));
+                        }
+
+                        window.close();
+                    }
+
+                    // Nettoyage et mise à jour des scènes
+                    for (Drawable* x : scene_particuliere) delete x;
+                    scene_particuliere.clear();
+                    G->tracerPiece(scene_particuliere, scene_generale, *P);
+                    D->decoration(scene_particuliere, *l, *G);
+                    D->decoration(scene_particuliere, *t, *G);
+                    D->decoration(scene_particuliere, *j, *G);
+                    D->decoration(scene_particuliere, *i, *G);
+                }
+            }
+        }
+
+        // Nettoyage de la grille
+        window.clear();
+        window.setView(window.getDefaultView());
+
+        // Affichages
+        for (Drawable* x : scene_generale) window.draw(*x);
+        for (Drawable* x : scene_particuliere) window.draw(*x);
+
+        window.display();
     }
-	// Remarquez que la destruction des objets n'est pas faites
-	// et que dans ce code il ne suffit pas de détruire scene_generale et scene_particuliere car on y a ajouté des objets créés par new et d'autre déclarés dans un bloc... ce qui n'est pas malin.
-        return EXIT_SUCCESS;
+
+    // Nettoyage final des pointeurs
+    delete l;
+    delete t;
+    delete j;
+    delete i;
+    delete G;
+    delete P;
+    delete D;
+    
+   for (Drawable* x : scene_generale) {
+        if (x != &G->getCentralPane() && x != &G->getTrame()) {
+            delete x;  // Supprime uniquement les objets dynamiquement alloués
+        }
+    }
+    scene_generale.clear();  // Vider le vecteur après suppression
+
+    for (Drawable* x : scene_particuliere) delete x;
+    scene_particuliere.clear();
+
+    return EXIT_SUCCESS;
 }

@@ -4,7 +4,6 @@
 
 int main() {
     //Listes des combinaisons de decoration pour gagner sur cette configuration : 3 3,      1 4, 1 3,   3 3,    3 5, 2 5, 1 5,     3 3,    4 6, 4 5, 4 4, 4 3, 4 2, 4 1
-
 	vector<pair<int, int>> coords { {0, 4}, {1, 4}, {2, 4}, {2, 5}};     
 	PieceConcrete tetris_L(coords);
     coords = {{2, 3}, {3, 3}, {4, 3}, {3, 4}};
@@ -25,24 +24,20 @@ int main() {
     //Decoration de la piece I
     Piece *i = new OperateurDeplacement {tetris_I,{4,6},OrientationDeplacement::NORD};
     i = new OperateurDeplacement {*i,{4,7},OrientationDeplacement::SUD};
-
     //création de plateau de jeu
     Plateau * P = new Plateau{6,8};
     //elimination des cases non jouables
     coords = {{0,0},{1,0},{2,0},{3,0},{5,0},{0,1},{1,1},{2,1},{3,1},{5,1},{0,2},{5,2},{0,3},{5,3},{0,6},{1,6},{2,6},{3,6},{5,6},{0,7},{1,7},{2,7},{3,7},{5,7}};
     P->initialiserNonJouable(coords);
-
     //cases gagnantes
-    vector<pair<int, int>> coordsGain = {{4,0}, {4,1}};
-    P->initialiserJouableGain(coordsGain); //Marquer les cellules comme cible
-    
+    vector<pair<vector<pair<int, int>>, Piece*>> vecteurGain = {{{{4,0},{4,1}},i}};
+    //Marquer les cellules comme cible
+    P->initialiserJouableGain(vecteurGain); 
     //plaçage des pieces
     P->placerPiece(tetris_L,'B');
-    P->placerPiece(tetris_T,'V');
+    P->placerPiece(tetris_T,'G');
     P->placerPiece(tetris_J,'M');
     P->placerPiece(tetris_I,'R');
-
-    vector<pair<int, int>> iCoordsCourant;
 	int exit = 1;
 	int x, y;
 	while (exit)
@@ -60,8 +55,7 @@ int main() {
                 t->trigger(make_pair(x,y));
                 i->trigger(make_pair(x,y)); //Piece à placer au bon endroit
                 j->trigger(make_pair(x,y));
-
-                P->detectionGain(coordsGain, i, exit);
+                P->detectionGain(vecteurGain,exit);
             }
 			P->afficher();
 		}

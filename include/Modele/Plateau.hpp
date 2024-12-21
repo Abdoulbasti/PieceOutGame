@@ -1,5 +1,5 @@
-#ifndef GRILLE_
-#define GRILLE_
+#ifndef PLATEAU_
+#define PLATEAU_
 
 #include "PieceConcrete.hpp"
 #include "OperateurDeplacement.hpp"
@@ -28,12 +28,13 @@ class Plateau
         bool estOccupee(int x, int y) const; // Vérifie si une case est occupée
         bool estDansLimites(Piece& piece) const;   // Vérifie que la pièce reste dans les limites
         bool peutPlacer( Piece& piece) const;      // Vérifie qu'une pièce peut être placée (pas de collision)
-        bool placerPiece( Piece& piece , char c);           // Place une pièce sur le Plateau
+        bool placerPiece( Piece& piece , int c);           // Place une pièce sur le Plateau
         bool estOperationValide(Piece &p,int x,int y); // verifie si une operation peut etre effectuée dans sur une piéce donnée
         void initialiserNonJouable(vector<pair<int,int>> vecteur); // Définit une case comme non jouable
         void afficher() const; // Affiche la grille (pour débogage)
-        void initialiserJouableGain(vector<pair<int,int>> vecteur);
-        void detectionGain(vector<pair<int,int>>& coordsGain, Piece* pieceAPlacer, int &exit);
-        bool estUnGain(int x, int y) const;
+        void initialiserJouableGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur);
+        bool estDansGain(vector<pair<int, int>> vecteur, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain);//detecte si des coordonnées données sont definie comme cibles
+        vector<pair<int, int>> estPieceGain(Piece* p, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain);
+        void detectionGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur, int &exit);
 };
 #endif

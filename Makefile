@@ -1,5 +1,5 @@
 CPP=g++ --std=c++11 -Wall -Wextra -Iinclude
-LSFML_OPTIONS=-lsfml-system -lsfml-graphics -lsfml-window
+LSFML_OPTIONS=-lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
 SOURCE_MODELE_DIR=source/Modele
 INCLUDE_MODELE_DIR=include/Modele
 SOURCE_VUE_DIR=source/Vue
@@ -13,8 +13,8 @@ OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete
 
 # La Liste des fichiers objets pour la vue
 #Ajouter ici d'autres objet .o 
-OBJ_VUE_LIST = $(BD_DIR)/Vue.o $(BD_DIR)/Grille.o $(BD_DIR)/EntreeSortie.o $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
-					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o $(BD_DIR)/Decorer.o
+OBJ_VUE_LIST = $(BD_DIR)/Vue.o $(BD_DIR)/VuePlateau.o $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o  $(BD_DIR)/Plateau.o $(BD_DIR)/Decorer.o
 
 
 #--------------------------------------- compilation du modele ------------------------------------------#
@@ -68,11 +68,8 @@ $(BD_DIR)/Vue.o : $(SOURCE_VUE_DIR)/Vue.cpp
 	mkdir -p build
 	$(CPP) -c $(SOURCE_VUE_DIR)/Vue.cpp -o $(BD_DIR)/Vue.o
 
-$(BD_DIR)/Grille.o : $(SOURCE_VUE_DIR)/Grille.cpp
-	$(CPP) -c $(SOURCE_VUE_DIR)/Grille.cpp -o $(BD_DIR)/Grille.o $(LSFML_OPTIONS)
-
-$(BD_DIR)/EntreeSortie.o : $(SOURCE_VUE_DIR)/EntreeSortie.cpp
-	$(CPP) -c $(SOURCE_VUE_DIR)/EntreeSortie.cpp -o $(BD_DIR)/EntreeSortie.o
+$(BD_DIR)/VuePlateau.o : $(SOURCE_VUE_DIR)/VuePlateau.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/VuePlateau.cpp -o $(BD_DIR)/VuePlateau.o $(LSFML_OPTIONS)
 
 $(BD_DIR)/Decorer.o : $(SOURCE_VUE_DIR)/Decorer.cpp
 	$(CPP) -c $(SOURCE_VUE_DIR)/Decorer.cpp -o $(BD_DIR)/Decorer.o

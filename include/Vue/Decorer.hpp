@@ -1,25 +1,21 @@
 #ifndef DECORER_
 #define DECORER_
 
-#include "Modele/OrientationSymetrie.hpp"
-#include "Modele/OrientationRotation.hpp"
-#include "Modele/OrientationDeplacement.hpp"
-#include "Grille.hpp"
-#include <SFML/Graphics.hpp>
-#include <iostream>
-using namespace std;
-using namespace sf;
-#include <vector>
+#include "VuePlateau.hpp"
 #include <cmath>
+#include <memory>
 
 
 
 class Decorer {
 public:
+    Decorer();
+
     // Décorations principales
-    static void ajouterSymboleRotation(vector<Drawable*>& objets, Grille& G, Vector2f position, Color color, bool horaire );
-    static void ajouterSymboleSymetrie(vector<Drawable*>& objets, Grille& G, Vector2f position, Color color, bool horizontale);
-    static void ajouterSymboleDeplacement(vector<Drawable*>& objets,Grille& G, Vector2f position, Color color, OrientationDeplacement sens);
+    void ajouterSymboleRotation(vector<Drawable*>& objets, VuePlateau& G, pair<int, int>& position, bool horaire );
+    void ajouterSymboleSymetrie(vector<Drawable*>& objets, VuePlateau& G, pair<int, int>& position,  bool horizontale);
+    void ajouterSymboleDeplacement(vector<Drawable*>& objets,VuePlateau& G, pair<int, int>& position, OrientationDeplacement& sens);
+    void decoration(vector<Drawable*>& objets,Piece& p, VuePlateau& G);
 };
 
 #endif
