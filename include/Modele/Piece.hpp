@@ -14,5 +14,6 @@ class Piece{
 	void trigger(const pair<int,int> & coord );
 	virtual vector<pair<int, int>>& getCoordinates() =0  ;
 	virtual void accept(const PieceOperateur &v)=0;
+	virtual ~Piece() {}
 };
 #endif

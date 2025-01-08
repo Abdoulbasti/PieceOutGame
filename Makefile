@@ -14,7 +14,7 @@ OBJ_MODELE_LIST = 	$(BD_DIR)/Modele.o  $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete
 # La Liste des fichiers objets pour la vue
 #Ajouter ici d'autres objet .o 
 OBJ_VUE_LIST = $(BD_DIR)/Vue.o $(BD_DIR)/VuePlateau.o $(BD_DIR)/Piece.o $(BD_DIR)/PieceConcrete.o  $(BD_DIR)/PieceOperateur.o $(BD_DIR)/OperateurDeplacement.o \
-					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o  $(BD_DIR)/Plateau.o $(BD_DIR)/Decorer.o
+					$(BD_DIR)/OperateurRotation.o  $(BD_DIR)/OperateurSymetrie.o  $(BD_DIR)/Plateau.o $(BD_DIR)/Decorer.o $(BD_DIR)/Puzzle1.o $(BD_DIR)/Puzzle2.o $(BD_DIR)/Puzzle3.o $(BD_DIR)/Puzzle4.o
 
 
 #--------------------------------------- compilation du modele ------------------------------------------#
@@ -49,6 +49,7 @@ $(BD_DIR)/OperateurRotation.o : $(SOURCE_MODELE_DIR)/OperateurRotation.cpp
 
 $(BD_DIR)/Plateau.o : $(SOURCE_MODELE_DIR)/Plateau.cpp
 	$(CPP) -c $(SOURCE_MODELE_DIR)/Plateau.cpp -o $(BD_DIR)/Plateau.o
+
 #Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_MODELE_LIST
 
 clean_modele :
@@ -73,6 +74,18 @@ $(BD_DIR)/VuePlateau.o : $(SOURCE_VUE_DIR)/VuePlateau.cpp
 
 $(BD_DIR)/Decorer.o : $(SOURCE_VUE_DIR)/Decorer.cpp
 	$(CPP) -c $(SOURCE_VUE_DIR)/Decorer.cpp -o $(BD_DIR)/Decorer.o
+
+$(BD_DIR)/Puzzle1.o : $(SOURCE_VUE_DIR)/Puzzle1.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Puzzle1.cpp -o $(BD_DIR)/Puzzle1.o
+
+$(BD_DIR)/Puzzle2.o : $(SOURCE_VUE_DIR)/Puzzle2.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Puzzle2.cpp -o $(BD_DIR)/Puzzle2.o
+
+$(BD_DIR)/Puzzle3.o : $(SOURCE_VUE_DIR)/Puzzle3.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Puzzle3.cpp -o $(BD_DIR)/Puzzle3.o
+
+$(BD_DIR)/Puzzle4.o : $(SOURCE_VUE_DIR)/Puzzle4.cpp
+	$(CPP) -c $(SOURCE_VUE_DIR)/Puzzle4.cpp -o $(BD_DIR)/Puzzle4.o
 #Ajouter ici d'autres regles de dependances .o ajouter dans OBJ_VUE_LIST
 
 clean_vue :

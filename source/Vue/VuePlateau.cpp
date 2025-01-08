@@ -82,7 +82,7 @@ Color VuePlateau::generateRandomTransparentColor() {
 
 void VuePlateau::tracerCaseGain(vector<Drawable*>& objets,vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain)
 {
-    for (const auto& pairing : vecteurgain)
+    for (const pair<vector<pair<int, int>>, Piece*>& pairing : vecteurgain)
     {
         Color c = generateRandomTransparentColor();
         for(pair<int, int> pg : pairing.first)
@@ -117,9 +117,9 @@ void VuePlateau::tracerPiece(vector<Drawable*>& objets,vector<Drawable*>& objets
         }
     }
     // Marquer les positions avec des couleurs correspondantes
-    for (const auto& piece : plateau.getPiecesEtCouleurs()) {
+    for (const pair<Piece&, char>& piece : plateau.getPiecesEtCouleurs()) {
 
-        for (const auto& coord : piece.first.getCoordinates()) {
+        for (const pair<int, int>& coord : piece.first.getCoordinates()) {
             int x = coord.first;
             int y = coord.second;
             if (x >= 0 && x < NB_COL && y >= 0 && y < NB_LIGNE) { // Vérifie les limites

@@ -22,7 +22,7 @@ bool Plateau::estOccupee(int x, int y) const
 
 bool Plateau::estDansLimites(Piece& piece) const  
 {
-    for (auto v : piece.getCoordinates())
+    for (pair<int, int> v : piece.getCoordinates())
     {
         if( v.first < 0 || v.first >= NB_COL || v.second < 0 || v.second >= NB_LIGNE || cases[v.second][v.first] == EtatCase::NON_JOUABLE)
         return false;
@@ -33,7 +33,7 @@ bool Plateau::peutPlacer( Piece& piece) const
 {
     if(estDansLimites(piece))
     {
-        for (auto v : piece.getCoordinates())
+        for (pair<int, int> v : piece.getCoordinates())
         {
             if(estOccupee(v.first,v.second))
             return false;
@@ -46,7 +46,7 @@ bool Plateau::placerPiece( Piece& piece,int c)
 {
     if (peutPlacer(piece))
     {
-        for (auto v : piece.getCoordinates())
+        for (pair<int, int> v : piece.getCoordinates())
         {
             occuperCase(v.first,v.second) ; 
         }
@@ -77,11 +77,11 @@ bool Plateau::estOperationValide(Piece& p, int x, int y) {
         if(operateur->getPosition().first==x && operateur->getPosition().second==y)
         {    
             // Applique mapPosition pour transformer les coordonnées
-            for (auto& pos : pa) {
+            for (pair<int, int>& pos : pa) {
                 operateur->mapPosition(pos);
             }
             // Libère les cases actuelles de la pièce
-            for (auto v : p.getCoordinates()) {
+            for (pair<int, int> v : p.getCoordinates()) {
                 cases[v.second][v.first] = EtatCase::JOUABLE_LIBRE;
             }
             // Crée une nouvelle pièce avec les coordonnées transformées
@@ -89,14 +89,14 @@ bool Plateau::estOperationValide(Piece& p, int x, int y) {
             // Vérifie si la pièce peut être placée
             if (peutPlacer(*pc)) {
                 // Réoccupe les cases si l'opération est valide avec les nouvelles coordonnées de p
-                for (auto v : pa) {
+                for (pair<int, int> v : pa) {
                     occuperCase(v.first, v.second);
                 }
                 delete pc; // Libère la mémoire
                 return true;
             }
             // Réoccupe les cases si l'opération n'est pas valide avec la piece initiale
-                for (auto v : p.getCoordinates()) {
+                for (pair<int, int> v : p.getCoordinates()) {
                     occuperCase(v.first, v.second);
                 }
             delete pc; // Libère la mémoire
@@ -111,7 +111,7 @@ bool Plateau::estOperationValide(Piece& p, int x, int y) {
 
 void Plateau::initialiserNonJouable(vector<pair<int,int>> vecteur)
 {
-    for (auto v : vecteur)
+    for (pair<int, int> v : vecteur)
     {
         if (v.first >= 0 && v.first < NB_COL && v.second >= 0 && v.second < NB_LIGNE) {
             cases[v.second][v.first] = EtatCase::NON_JOUABLE;
@@ -131,8 +131,8 @@ void Plateau::afficher() const {
         }
     }
     // Marquer les positions avec des couleurs correspondantes
-    for (const auto& piece : piecesEtCouleurs) {
-        for (const auto& coord : piece.first.getCoordinates()) {
+    for (const pair<Piece &, char>& piece : piecesEtCouleurs) {
+        for (const pair<int, int>& coord : piece.first.getCoordinates()) {
             int x = coord.first;
             int y = coord.second;
             if (x >= 0 && x < NB_COL && y >= 0 && y < NB_LIGNE) { // Vérifie les limites
@@ -159,9 +159,9 @@ void Plateau::afficher() const {
 //initialiation des cellules(piece) gagnantes
 void Plateau::initialiserJouableGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur)
 {
-    for (const auto& config : vecteur) 
+    for (const pair<vector<pair<int, int>>, Piece *>& config : vecteur) 
     { 
-        for (auto v : config.first)
+        for (pair<int, int> v : config.first)
         {
             if (v.first >= 0 && v.first < NB_COL && v.second >= 0 && v.second < NB_LIGNE) {
                 cases[v.second][v.first] = EtatCase::JOUABLE_GAIN;
@@ -171,7 +171,7 @@ void Plateau::initialiserJouableGain(vector<pair<vector<pair<int, int>>, Piece*>
 }
 bool Plateau::estDansGain(vector<pair<int, int>> vecteur, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain)
 {
-    for (const auto& config : vecteurgain) {
+    for (const pair<vector<pair<int, int>>, Piece *>& config : vecteurgain) {
         // Récupère les coordonnées de gain associées à la pièce dans la paire
         vector<pair<int, int>> coordsGain = config.first; // Coordonnées gagnantes à vérifier
         // Trie les deux ensembles de coordonnées pour une comparaison fiable
@@ -188,14 +188,14 @@ bool Plateau::estDansGain(vector<pair<int, int>> vecteur, vector<pair<vector<pai
 
 vector<pair<int, int>> Plateau::estPieceGain(Piece* p, vector<pair<vector<pair<int, int>>, Piece*>> vecteurgain)
 {
-    for (const auto& config : vecteurgain)
+    for (const pair<vector<pair<int, int>>, Piece *>& config : vecteurgain)
     {
         if(p == config.second) return config.first;
     }
 }
 //Detection de gain dans une configuration
 void Plateau::detectionGain(vector<pair<vector<pair<int, int>>, Piece*>> vecteur, int& exit) {
-    for (const auto& config : vecteur) {
+    for (const pair<vector<pair<int, int>>, Piece *>& config : vecteur) {
         Piece* pieceAPlacer = config.second;              // Pièce associée
          // Récupérer les coordonnées de la pièce
         vector<pair<int, int>> coordsPiece = pieceAPlacer->getCoordinates();
