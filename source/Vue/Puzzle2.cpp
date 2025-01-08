@@ -1,5 +1,4 @@
 #include "Vue/Puzzle2.hpp"
-#include <memory> // Pour std::unique_ptr et std::make_unique
 
 Puzzle2::Puzzle2(int T ,int C, int L, int ML, int MR, int MT, int MB):TILE_SIZE{T},NB_COL{C},
 NB_LIGNE{L},MARGIN_LEFT{ML},MARGIN_RIGHT{MR},MARGIN_TOP{MT},MARGIN_BOTTOM{MB}{}
